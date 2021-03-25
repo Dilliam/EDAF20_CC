@@ -1,0 +1,63 @@
+﻿CREATE OR REPLACE Raw_Materials(
+ingredient varchar(20),
+in_stock int,
+mesure int,
+delivery_date DATE,
+delivery_quantity int
+);
+
+
+CREATE OR REPLACE Product(
+product_name varchar(20)
+);
+
+
+CREATE OR REPLACE Pallet(
+pallet_id int,
+blocked boolean,
+delivery_time DATETIME,
+produced_time DATETIME,
+PRIMARY KEY(pallet_id)
+);
+
+
+CREATE OR REPLACE Order(
+order_id int,
+delivery_time,
+order_date DATE,
+PRIMARY KEY(order_id)
+);
+
+
+CREATE OR REPLACE Customer(
+cust_id int,
+cust_name varchar(20),
+cust_adress varchar(20)
+PRIMARY KEY(cust_id)
+);
+
+
+CREATE OR REPLACE Specification(
+order_id int,
+product_name varchar(20),
+order_date DATE,
+delivery_date DATE,
+PRIMARY KEY(order_id),
+FOREGIN KEY(order_id) REFERENCES Order(order_id),
+FOREGIN KEY(delivery_date) REFERENCES Order(delivery_date),
+FOREGIN KEY(order_date) REFERENCES Order(order_date),
+FOREGIN KEY(product_name) REFERENCES Product(product_name),
+);
+
+
+
+
+
+
+CREATE OR REPLACE Recipes(
+product_name varchar(20),
+ingredients varchar(20),
+ingredient_amount int,
+FOREGIN KEY(product_name) REFERENCES Product(product_name),
+FOREGIN KEY(ingredients) REFERENCES Raw_Materials(ingredients)
+);
